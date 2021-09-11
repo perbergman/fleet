@@ -29,6 +29,9 @@ public class WebHandler {
     @Value("${jwt.server}")
     private String jwtServer;
 
+    @Value("${project}")
+    private String project;
+
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
@@ -41,7 +44,7 @@ public class WebHandler {
         Optional<String> token = getToken(id);
 
         if(token.isPresent()) {
-            String arg = String.format("providers/deliverydev/vehicles/%s", id);
+            String arg = String.format("providers/%s/vehicles/%s", project, id);
             ManagedChannel channel = ManagedChannelBuilder.forTarget(fleetApi).build();
             GetVehicleRequest vehicleRequest = GetVehicleRequest.newBuilder().setName(arg).build();
             var vehicle = VehicleServiceGrpc.newBlockingStub(channel).withCallCredentials(new MyCallCredentials(token.get())).getVehicle(vehicleRequest);
