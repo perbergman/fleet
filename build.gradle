@@ -42,7 +42,6 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
     plugins {
@@ -52,3 +51,4 @@ protobuf {
         all()*.plugins { grpc {} }
     }
 }
+
